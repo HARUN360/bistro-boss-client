@@ -6,6 +6,7 @@ import 'react-tabs/style/react-tabs.css';
 import useMenu from '../../hukse/useMenu';
 import OrderTab from './OrderTab';
 import { useParams } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 
 const Order = () => {
     const categories = ['salad', 'pizza', 'soup', 'dessert',  'drinks']
@@ -20,6 +21,9 @@ const Order = () => {
     const drinks = menu.filter(item => item.category === 'drinks')
     return (
         <div>
+               <Helmet>
+                <title>Bistro Boss Restaurant | order Food</title>
+            </Helmet>
             <Cover img={orderCoverImg} title="order food"></Cover>
             <Tabs defaultIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
                 <TabList>
