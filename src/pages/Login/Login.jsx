@@ -13,6 +13,7 @@ const Login = () => {
    const location = useLocation();
    
    const from = location.state?.from?.pathname || '/';
+   console.log('state in the location login page', location?.state);
 
     useEffect( () => {
         loadCaptchaEnginge(6); 
@@ -90,13 +91,13 @@ const Login = () => {
                             <label className="label">
                             <LoadCanvasTemplate />
                             </label>
-                            <input type="text" onBlur={handleValidateCaptcha}  name="capcha" placeholder="type the text capcha above" className="input input-bordered" required />
+                            <input type="text" onBlur={handleValidateCaptcha}  name="capcha" placeholder="type the text capcha above" className="input input-bordered"  />
                           
                           
                         </div>
                         <div className="form-control mt-6">
-                            {/* <button className="btn btn-primary">Login</button> */}
-                            <input disabled={disabled} type="submit" value="Login" className="btn btn-primary" />
+                             {/* pore disable add koris: disabled = false */}
+                            <input disabled={false} type="submit" value="Login" className="btn btn-primary" />
                         </div>
                     </form>
                     <p><small>New Here? <Link to='/signup'>Create an account</Link></small></p>

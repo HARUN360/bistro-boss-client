@@ -1,15 +1,18 @@
 import { useContext } from "react";
-import { NavLink } from "react-router-dom";
+import {  Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
+import { FaShoppingCart } from "react-icons/fa";
+import useCart from "../../hukse/useCart";
 
 
 const Navbar = () => {
     const { user, logOut } = useContext(AuthContext);
+    const [cart] = useCart();
     console.log('user', user);
     const handleLogOut = () => {
         logOut()
-        .then(()=> {})
-        .catch(error => console.error(error))
+            .then(() => { })
+            .catch(error => console.error(error))
     }
 
     const navOption = <>
@@ -17,12 +20,20 @@ const Navbar = () => {
         <li><NavLink to='/menu'>Menu</NavLink></li>
         <li><NavLink to='/secret'>secret</NavLink></li>
         <li><NavLink to='/order/salad'>Order Food</NavLink></li>
+        <li>
+            <NavLink to='/'>
+                <button className="flex gap-2">
+                    <span><FaShoppingCart></FaShoppingCart></span>
+                    <div className="badge badge-secondary">+{cart.length}</div>
+                </button>
+            </NavLink>
+        </li>
 
         {
             user ? <>
-                   <small>{user?.displayName}</small>
-                   <button onClick={handleLogOut} className="btn">logOut</button>
-                  </> 
+                <small>{user?.displayName}</small>
+                <button onClick={handleLogOut} className="btn">logOut</button>
+            </>
                 :
                 <>
                     <li><NavLink to='/login'>Login</NavLink></li>
