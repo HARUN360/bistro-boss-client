@@ -21,7 +21,7 @@ const Navbar = () => {
         <li><NavLink to='/secret'>secret</NavLink></li>
         <li><NavLink to='/order/salad'>Order Food</NavLink></li>
         <li>
-            <NavLink to='/'>
+            <NavLink to='/dashboard/cart'>
                 <button className="flex gap-2">
                     <span><FaShoppingCart></FaShoppingCart></span>
                     <div className="badge badge-secondary">+{cart.length}</div>
@@ -31,7 +31,7 @@ const Navbar = () => {
 
         {
             user ? <>
-                <small>{user?.displayName}</small>
+                {/* <small>{user?.displayName}</small> */}
                 <button onClick={handleLogOut} className="btn">logOut</button>
             </>
                 :
