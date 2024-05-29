@@ -4,32 +4,47 @@ import { useForm } from "react-hook-form";
 import { AuthContext } from "../../providers/AuthProvider";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import useAxiosPublic from "../../hukse/useAxiosPublic";
+import SocialLogin from "../SocialLogin/SocialLogin";
 
 const SignUp = () => {
-    const {createUser, updateUserPhofile} = useContext(AuthContext);
+    const axiosPublic = useAxiosPublic();
+    const { createUser, updateUserPhofile } = useContext(AuthContext);
     const { register, handleSubmit, reset, formState: { errors }, } = useForm();
     const navigate = useNavigate();
     const onSubmit = data => {
         console.log(data);
         createUser(data.email, data.password)
-        .then(reseult => {
-            console.log(reseult.user);
-            updateUserPhofile(data.name, data.photourl)
-            .then(() => {
-                console.log('user phofile info updated')
-                reset();
-                Swal.fire({
-                    position: "top-end",
-                    icon: "success",
-                    title: "User Create a succesfully",
-                    showConfirmButton: false,
-                    timer: 1500
-                  });
-                  navigate('/')
+            .then(reseult => {
+                console.log(reseult.user);
+                updateUserPhofile(data.name, data.photourl)
+                    .then(() => {
+                        // create user entry in the database
+                        const userInfo = {
+                            name: data.name,
+                            email: data.email,
+
+                        }
+                        axiosPublic.post('/users', userInfo)
+                            .then(res => {
+                                if (res.data.insertedId) {
+                                    console.log('user added to the database');
+                                    reset();
+                                    Swal.fire({
+                                        position: "top-end",
+                                        icon: "success",
+                                        title: "User Create a succesfully",
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    });
+                                    navigate('/')
+                                }
+                            })
+
+                    })
+                    
             })
-            .error(error => console.error(error))
-        })
-        .catch(error => console.error(error))
+            .catch(error => console.error(error))
     };
 
     return (
@@ -56,7 +71,7 @@ const SignUp = () => {
                                 <label className="label">
                                     <span className="label-text">Photo URL</span>
                                 </label>
-                                <input type="text" {...register("photourl", { required: true })}  placeholder="Photo URL" className="input input-bordered" />
+                                <input type="text" {...register("photourl", { required: true })} placeholder="Photo URL" className="input input-bordered" />
                                 {errors.photourl && <span className="text-red-700">Photo URl is required</span>}
                             </div>
                             <div className="form-control">
@@ -100,7 +115,8 @@ const SignUp = () => {
                                 {/* <button className="btn btn-primary">Login</button> */}
                             </div>
                         </form>
-                        <p><small>Already have an account? <Link to='/login'>Please login</Link></small></p>
+                        <p className="px-6"><small>Already have an account? <Link to='/login'>Please login</Link></small></p>
+                    <SocialLogin></SocialLogin>
                     </div>
                 </div>
             </div>
