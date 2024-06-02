@@ -17,6 +17,9 @@ import AdminRoute from "./AdminRoute";
 import ManageItems from "../pages/Dashboard/Admin/ManageItems";
 import UpdateItem from "../pages/Dashboard/Admin/UpdateItem";
 import Payment from "../pages/Dashboard/User/Payment";
+import PaymentHistory from "../pages/Dashboard/User/PaymentHistory";
+import UserHome from "../pages/Dashboard/User/UserHome";
+import AdminHome from "../pages/Dashboard/Admin/AdminHome";
 
   const router = createBrowserRouter([
     {
@@ -55,6 +58,10 @@ import Payment from "../pages/Dashboard/User/Payment";
       children: [
         // normal user routes
         {
+          path: 'userHome',
+          element: <UserHome></UserHome>
+        },
+        {
           path: 'cart',
           element: <Cart></Cart>
         },
@@ -62,7 +69,15 @@ import Payment from "../pages/Dashboard/User/Payment";
           path: 'payment',
           element: <Payment></Payment>
         },
+        {
+          path: 'paymentHistory',
+          element: <PaymentHistory></PaymentHistory>
+        },
         // admin routes
+        {
+          path: 'adminHome',
+          element: <AdminRoute><AdminHome></AdminHome></AdminRoute>,
+        },
         {
           path: 'addItems',
           element: <AdminRoute><AddItems></AddItems></AdminRoute>,
@@ -74,7 +89,7 @@ import Payment from "../pages/Dashboard/User/Payment";
         {
           path: 'updateItem/:id',
           element: <AdminRoute><UpdateItem></UpdateItem></AdminRoute>,
-          loader: ({params}) => fetch(`http://localhost:5000/menu/${params.id}`)
+          loader: ({params}) => fetch(`https://bistro-boss-server-teal-three.vercel.app/menu/${params.id}`)
         },
         {
            path: 'users',

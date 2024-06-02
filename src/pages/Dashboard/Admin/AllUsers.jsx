@@ -28,7 +28,7 @@ const AllUsers = () => {
         }).then((result) => {
             if (result.isConfirmed) {
 
-                //  axios.delete(`http://localhost:5000/cartall/${id}`)
+                //  axios.delete(`https://bistro-boss-server-teal-three.vercel.app/cartall/${id}`)
                 //  .then(res => {
                 //     console.log(res);
                 //  })
